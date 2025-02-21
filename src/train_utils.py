@@ -103,18 +103,6 @@ def load_checkpoint(checkpoint_path) -> Any | None:
         return None
 
 
-def get_latest_checkpoint(checkpoint_dir) -> None | str:
-    """Find the latest checkpoint in the directory based on step number."""
-    checkpoints = glob.glob(os.path.join(checkpoint_dir, "step_*.pth"))
-    if not checkpoints:
-        return None
-    
-    # Extract step numbers and find the latest
-    steps = [int(ckpt.split('step_')[-1].replace('.pth', '')) for ckpt in checkpoints]
-    latest_checkpoint = checkpoints[steps.index(max(steps))]
-    return latest_checkpoint
-
-
 def save_checkpoint(checkpoint_path, step, loss, model, optimizer, scheduler=None, scaler=None) -> None:
     checkpoint = {
         "step": step,
